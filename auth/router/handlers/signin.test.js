@@ -2,8 +2,10 @@
 
 process.env.SECRET = "TEST_SECRET";
 
-const { db, users } = require('../../../../../src/auth/models');
-const { handleSignin } = require('../../../../../src/auth/router/handlers.js');
+// const { db, users } = require('../../../../../src/auth/models');
+const { db, users } = require('../../../src/auth/models');
+// const { handleSignin } = require('../../../../../src/auth/router/handlers.js');
+const { handleSignin } = require('../../../src/auth/router/handlers');
 
 beforeAll(async () => {
   await db.sync();
@@ -13,7 +15,7 @@ afterAll(async () => {
   await db.drop();
 });
 
-describe('Testing the signin handler', () => {
+xdescribe('Testing the signin handler', () => {
 
   const res = {
     send: jest.fn(() => res),

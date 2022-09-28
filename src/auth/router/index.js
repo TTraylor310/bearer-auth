@@ -12,6 +12,10 @@ const {
   handleSecret
 } = require('./handlers.js');
 
+authRouter.get('/', (req, res, next) => {
+  res.status(200).send('This will work');
+});
+
 authRouter.post('/signup', handleSignup);
 authRouter.post('/signin', basicAuth, handleSignin);
 authRouter.get('/users', bearerAuth, handleGetUsers);
