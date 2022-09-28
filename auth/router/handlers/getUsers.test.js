@@ -2,8 +2,10 @@
 
 process.env.SECRET = "TEST_SECRET";
 
-const { db, } = require('../../../../../src/auth/models');
-const { handleGetUsers } = require('../../../../../src/auth/router/handlers.js');
+// const { db, } = require('../../../../../src/auth/models');
+const { db, } = require('../../../src/auth/models');
+// const { handleGetUsers } = require('../../../../../src/auth/router/handlers.js');
+const { handleGetUsers } = require('../../../src/auth/router/handlers');
 
 beforeAll(async () => {
   await db.sync();
@@ -13,7 +15,7 @@ afterAll(async () => {
 });
 
 
-describe('Router handler for getUsers', () => {
+xdescribe('Router handler for getUsers', () => {
 
   const res = {
     send: jest.fn(() => res),
