@@ -8,4 +8,3 @@ db.sync()
     require('./src/server.js').startup(process.env.PORT);
   })
   .catch( (e) => console.error(e));
-

@@ -4,16 +4,14 @@ const { users } = require('../models/index.js');
 
 async function handleSignup(req, res, next) {
   try {
-    console.log('testing here', req.body);
     let userRecord = await users.create(req.body);
     const output = {
       user: userRecord,
-      // token: userRecord.token
+      token: userRecord.token
     };
     res.status(200).json(output);
   } catch (e) {
     console.error(e);
-    // next(e);
     res.status(403).send('error signing up...');
   }
 }
@@ -21,13 +19,12 @@ async function handleSignup(req, res, next) {
 async function handleSignin(req, res, next) {
   try {
     console.log('testing num2');
-    const user = {
-      user: req.user,
-      token: req.user.token
-    };
-    res.status(200).json(user);
+    // const user = {
+    //   user: req.user,
+    //   token: req.user.token
+    // };
+    res.status(200).json(req.user);
   } catch (e) {
-    console.log('testing num 5');
     console.error(e);
     next(e);
   }

@@ -7,6 +7,7 @@ data
 *.crt
 *.key
 *.env
+.vscode
 package-lock.json
 
 ### Vim ###

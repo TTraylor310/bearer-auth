@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "ttraylor83",
+    "username": "tim",
     "password": null,
     "database": "bearer-auth",
     "host": "127.0.0.1",

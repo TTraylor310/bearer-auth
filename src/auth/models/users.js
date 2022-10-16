@@ -1,6 +1,9 @@
 'use strict';
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const SECRET = process.env.SECRET || 'supersecretstring';
 
 const userSchema = (sequelize, DataTypes) => {
   const model = sequelize.define('User', {
@@ -9,8 +12,11 @@ const userSchema = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.VIRTUAL,
       get() {
-        return jwt.sign({ username: this.username });
-      }
+        return jwt.sign({ username: this.username }, SECRET, { expiresIn: '15m'});
+      },
+      set(token) {
+        return jwt.sign(token, SECRET, {expiresIn: '15m'})
+      },
     }
   });
 
@@ -21,11 +27,16 @@ const userSchema = (sequelize, DataTypes) => {
 
   // Basic AUTH: Validating strings (username, password) 
   model.authenticateBasic = async function (username, password) {
-    const user = await this.findOne({ username })
-    const valid = await bcrypt.compare(password, user.password)
-    if (valid) { return user; }
-    throw new Error('Invalid User');
-  }
+    try {
+      const user = await this.findOne({ where: { username } });
+      const valid = await bcrypt.compare(password, user.password);
+      if (valid) return user;
+      else throw new Error('Invalid User');
+    } catch (e) {
+      console.error('Error in authenticateBasic:', e.message);
+      throw new Error(e);
+    }
+  };
 
   // Bearer AUTH: Validating a token
   model.authenticateToken = async function (token) {
